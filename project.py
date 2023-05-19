@@ -22,4 +22,13 @@ stats_df = stats_df.loc[~rezerwowi]
 stats_df["Pos"] = stats_df["Pos"].str.split(',').str[0]
 print(stats_df.head())
 
+#Model
+knn = KNeighborsClassifier(n_neighbors=5)
+X = stats_df.drop("Pos", axis=1).values
+y = stats_df["Pos"].values
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=21, stratify=y)
+knn.fit(X_train, y_train)
+przwidywania = knn.predict(X_test)
+print(przwidywania)
+print(y_test)
 
