@@ -6,7 +6,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
 
 # Wczytanie i wyświetlenie tabeli
-
 stats_df = pd.read_csv(r"PlayersStats.csv", encoding='Windows-1250', index_col=1, sep=';')
 
 # Sprawdzenie ogólnych informacji o tabeli
@@ -44,7 +43,7 @@ X_test_scaled = scaler.fit_transform(X_test)
 stats_cv.fit(X_train_scaled, y_train)
 
 #Wyświetlanie najlepszych parametrów i wyniku
-print("Best Parameters: {}\nBest Score: {}".format( stats_cv.best_params_, stats_cv.best_score_))
+print("Best Parameters: {}\nBest Score: {}".format(stats_cv.best_params_, stats_cv.best_score_))
 print("Predicted values score: {}".format(stats_cv.score(X_test_scaled, y_test)))
 predictions = stats_cv.predict(X_test_scaled)
 
