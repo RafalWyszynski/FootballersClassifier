@@ -1,6 +1,4 @@
 import pandas as pd
-import numpy as np 
-import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
@@ -44,6 +42,12 @@ X_test_scaled = scaler.fit_transform(X_test)
 
 #Tworzenie modelu
 stats_cv.fit(X_train_scaled, y_train)
-print(stats_cv.best_params_, stats_cv.best_score_)
-predictions = stats_cv.score(X_test_scaled, y_test)
-print("Predictions: {}".format(predictions))
+
+#Wyświetlanie najlepszych parametrów i wyniku
+print("Best Parameters: {}\nBest Score: {}".format( stats_cv.best_params_, stats_cv.best_score_))
+print("Predicted values score: {}".format(stats_cv.score(X_test_scaled, y_test)))
+predictions = stats_cv.predict(X_test_scaled)
+
+#Tworzenie DataFrame'u porównującego wartości przewidziane z rzeczywistymi
+comparison_df = pd.DataFrame({"Predicitons": predictions, "True Values": y_test})
+print(comparison_df.iloc[0:10, :])
