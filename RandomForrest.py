@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
@@ -26,18 +26,6 @@ stats_df["Pos"] = stats_df["Pos"].str.slice(stop=2)
 print(stats_df.head())
 print(stats_df.info())
 
-#Inicjalizacja modelu
-knn = KNeighborsClassifier()
-
-# Tworzenie Foldów do walidacji krzyżowej
-kf = KFold(n_splits=6, shuffle=True)
-
-# Tworzenie siatki przeszukiwań
-parameters = {"n_neighbors": list(range(1, 50)),
-              "weights": ["uniform", "distance"],
-              "metric": ["euclidean", "manhattan", "chebyshev"]}
-stats_cv = GridSearchCV(knn, parameters, scoring="accuracy", cv=kf)
-
 #Podział tabeli na cechy i etykiety
 X = stats_df.drop("Pos", axis=1).values
 y = stats_df["Pos"].values
@@ -48,7 +36,17 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.fit_transform(X_test)
 
-#Tworzenie modelu
+rf = RandomForestClassifier()
+
+# Tworzenie Foldów do walidacji krzyżowej
+kf = KFold(n_splits=6, shuffle=True)
+
+# Tworzenie siatki przeszukiwań
+parameters = {"n_estimators": [16,32,64,128],
+              "max_depth": [2,4,8,12,13,14],
+              "min_samples_split" : [2,4,8,16]}
+stats_cv = GridSearchCV(rf, parameters, scoring="accuracy", cv=kf)
+
 stats_cv.fit(X_train_scaled, y_train)
 
 #Wyświetlanie najlepszych parametrów i wyniku
