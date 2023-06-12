@@ -7,6 +7,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
+np.random.seed(36)
+
 # Wczytanie i wyświetlenie tabeli
 stats_df = pd.read_csv(r"PlayersStats.csv", encoding='Windows-1250', index_col=1, sep=';')
 sztuczne_df = pd.read_csv(r"Sztuczne.csv", encoding='Windows-1250', index_col=0, sep=';')
