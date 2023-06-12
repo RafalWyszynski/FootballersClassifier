@@ -7,10 +7,9 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-np.random.seed(36)
-
 # Wczytanie i wyświetlenie tabeli
 stats_df = pd.read_csv(r"PlayersStats.csv", encoding='Windows-1250', index_col=1, sep=';')
+sztuczne_df = pd.read_csv(r"Sztuczne.csv", encoding='Windows-1250', index_col=0, sep=';')
 
 # Sprawdzenie ogólnych informacji o tabeli
 stats_df.info()
@@ -64,6 +63,15 @@ print(comparison_df.iloc[0:10, :])
 cv_results = stats_cv.cv_results_
 accuracy_values = cv_results['mean_test_score']
 
+#Sztuczne dane:
+X_szt = sztuczne_df.drop("Pos", axis=1).values
+y_szt = sztuczne_df["Pos"].values
+sztuczne = stats_cv.predict(X_szt)
+comparison_df2 = pd.DataFrame({"Predicitons": sztuczne, "True Values": y_szt})
+print(comparison_df2.iloc[0:10, :])
+
+
+#Rysowanie boxplota
 plt.boxplot(accuracy_values, patch_artist=True)
 plt.title("Accuracy Values - Cross-validation")
 plt.xlabel("Parameter Combinations")
