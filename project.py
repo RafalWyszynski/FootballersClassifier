@@ -19,7 +19,7 @@ stats_df.info()
 # Obróbka danych
 rezerwowi = stats_df["Min"] < 300
 stats_df = stats_df.loc[~rezerwowi]
-stats_df = stats_df.drop(["Squad", "Comp", "Born", "Rk", "Nation", "Age", "MP", "Starts", "Min", 
+stats_df = stats_df.drop(["Squad", "Comp", "Born", "Rk", "Nation", "Age", "MP", "Starts", "Min",
                           "90s", "PaswRight", "PaswLeft", "PaswOther", "GcaFld", "CrdY", "CrdR",
                           "2CrdY"], axis=1)
 stats_df = stats_df.dropna()

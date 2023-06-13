@@ -42,7 +42,7 @@ nb = GaussianNB()
 kf = KFold(n_splits=6, shuffle=True)
 
 # Tworzenie siatki przeszukiwań
-parameters = {'var_smoothing': np.logspace(0,-9, num=10)} 
+parameters = {'var_smoothing': np.logspace(0,-9, num=10)}
 stats_cv = GridSearchCV(nb, parameters, scoring="accuracy", cv=kf)
 
 stats_cv.fit(X_train_scaled, y_train)
